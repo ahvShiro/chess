@@ -36,7 +36,7 @@ public class UI {
 
     private static void printPiece(ChessPiece piece, boolean isWhite) {
         if (piece == null) {
-            System.out.print(isWhite ? "⬜" : "⬛");
+            System.out.print(isWhite ? "⬛" : "⬜");
         } else {
             System.out.print(piece);
         }
