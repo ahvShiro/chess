@@ -31,8 +31,16 @@ public class ChessMatch {
 
         validateSourcePosition(source);
 
+        validadeTargetPosition(source, target);
+
         Piece capturedPiece = makeMove(source, target);
         return (ChessPiece)capturedPiece;
+    }
+
+    private void validadeTargetPosition(Position source, Position target) {
+        if (!board.piece(source).possibleMove(target)) {
+            throw new ChessException("The chosen piece cannot be moved to target position");
+        }
     }
 
     private Piece makeMove(Position source, Position target) {
@@ -63,7 +71,7 @@ public class ChessMatch {
         // QUEEN
 //        placeNewPiece('d', 1, new Queen(board, Color.BLACK));
 
-        // THE ROOOOOOOOOOOOOOOOOOOOK
+        // THE ROOK
         placeNewPiece('a', 1, new Rook(board, Color.WHITE));
         placeNewPiece('h', 1, new Rook(board, Color.WHITE));
 
@@ -87,7 +95,7 @@ public class ChessMatch {
         // QUEEN
 //        placeNewPiece('d', 8, new Queen(board, Color.BLACK));
 
-        // THE ROOOOOOOOOOOOOOOOOOOOK
+        // THE ROOK
         placeNewPiece('a', 8, new Rook(board, Color.BLACK));
         placeNewPiece('h', 8, new Rook(board, Color.BLACK));
 
