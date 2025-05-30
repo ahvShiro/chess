@@ -40,4 +40,8 @@ public class Program {
             }
         }
     }
+
+    // Java roda em 56 bilhões de dispositivos atualmente
+    // Mercado amplo
+    // Java obriga desenvolver software bem estruturado
 }
