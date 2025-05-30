@@ -45,8 +45,7 @@ public class UI {
         }
     }
 
-
-    public static void printBoard(ChessPiece[][] pieces) {
+        public static void printBoard(ChessPiece[][] pieces) {
 
         // Linhas com as peças
         // 8 - = - = - = - =
@@ -58,7 +57,7 @@ public class UI {
             System.out.print((8 - i) + " ");
 
             for (int j = 0; j < pieces.length; j++) {
-                printPiece(pieces[i][j], isWhite);
+                printPiece(pieces[i][j], isWhite, false);
                 isWhite = !isWhite;
             }
 
@@ -77,9 +76,44 @@ public class UI {
 
     }
 
-    private static void printPiece(ChessPiece piece, boolean isWhite) {
+    public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
+
+        // Linhas com as peças
+        // 8 - = - = - = - =
+        // 7 = - = - = - = -
+        // 6 ...
+        for (int i = 0; i < pieces.length; i++) {
+
+            boolean isWhite = (i % 2 == 0);
+            System.out.print((8 - i) + " ");
+
+            for (int j = 0; j < pieces.length; j++) {
+                printPiece(pieces[i][j], isWhite, possibleMoves[i][j]);
+                isWhite = !isWhite;
+            }
+
+            System.out.println();
+        }
+
+        // Ultima linha
+        // a b c d e...
+        System.out.print("  ");
+
+        char letter = 'a';
+        for (int i = 0; i < pieces.length; i++) {
+            System.out.print((char)(letter + i));
+            System.out.print(" ");
+        }
+    }
+
+
+
+    private static void printPiece(ChessPiece piece, boolean isWhite, boolean background) {
+        if (background) {
+            System.out.print(ANSI_BLUE_BACKGROUND);
+        }
         if (piece == null) {
-            System.out.print(isWhite ? "=" : "-");
+            System.out.print(isWhite ? "=" + ANSI_RESET : "-" + ANSI_RESET);
         } else {
             if (piece.getColor() == Color.WHITE) {
                 System.out.print(ANSI_WHITE + piece + ANSI_RESET);
