@@ -1,6 +1,5 @@
 package application;
 
-import board.Board;
 import chess.ChessException;
 import chess.ChessMatch;
 import chess.ChessPiece;
@@ -38,6 +37,13 @@ public class Program {
                 if (capturedPiece != null) {
                     captured.add(capturedPiece);
                 }
+
+                if (chessMatch.getPromoted() != null) {
+                    System.out.print("Enter piece for promotion (B/N/R/Q): ");
+                    String pieceForPromotion = scanner.nextLine();
+                    chessMatch.replacePromotedPiece(pieceForPromotion);
+                }
+
             } catch (ChessException e) {
                 System.out.println(e.getMessage());
                 scanner.nextLine();
