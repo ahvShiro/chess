@@ -39,8 +39,12 @@ public class Program {
                 }
 
                 if (chessMatch.getPromoted() != null) {
-                    System.out.print("Enter piece for promotion (B/N/R/Q): ");
-                    String pieceForPromotion = scanner.nextLine();
+                    String pieceForPromotion = null;
+                    do {
+                        System.out.print("Enter piece for promotion (B/N/R/Q): ");
+                        pieceForPromotion = scanner.nextLine().toUpperCase();
+                    } while (!pieceForPromotion.matches("[BNRQ]"));
+
                     chessMatch.replacePromotedPiece(pieceForPromotion);
                 }
 
