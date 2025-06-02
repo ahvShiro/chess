@@ -3,6 +3,7 @@ package chess;
 import board.Board;
 import board.Piece;
 import board.Position;
+import chess.pieces.Bishop;
 import chess.pieces.King;
 import chess.pieces.Pawn;
 import chess.pieces.Rook;
@@ -216,8 +217,8 @@ public class ChessMatch {
 //        placeNewPiece('g', 1, new Knight(board, Color.WHITE));
 
         // BISHOP
-//        placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
-//        placeNewPiece('f', 1, new Knight(board, Color.WHITE));
+        placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
+        placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
 
         // PAWNS
         for (int i = 0; i < board.getRows(); i++) {
@@ -240,8 +241,8 @@ public class ChessMatch {
 //        placeNewPiece('g', 8, new Knight(board, Color.BLACK));
 
         // BISHOP
-//        placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
-//        placeNewPiece('f', 8, new Knight(board, Color.BLACK));
+        placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
+        placeNewPiece('f', 8, new Bishop(board, Color.BLACK));
 
         // PAWNS
         for (int i = 0; i < board.getRows(); i++) {
