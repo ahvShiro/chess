@@ -4,6 +4,7 @@ import board.Board;
 import board.Piece;
 import board.Position;
 import chess.pieces.King;
+import chess.pieces.Pawn;
 import chess.pieces.Rook;
 
 import java.util.ArrayList;
@@ -207,8 +208,8 @@ public class ChessMatch {
 //        placeNewPiece('d', 1, new Queen(board, Color.BLACK));
 
         // THE ROOK
-        placeNewPiece('d', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('h', 7, new Rook(board, Color.WHITE));
+        placeNewPiece('a', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('h', 1, new Rook(board, Color.WHITE));
 
         // KNIGHT
 //        placeNewPiece('b', 1, new Knight(board, Color.WHITE));
@@ -219,9 +220,9 @@ public class ChessMatch {
 //        placeNewPiece('f', 1, new Knight(board, Color.WHITE));
 
         // PAWNS
-//        for (int i = 0; i < board.getRows(); i++) {
-//            placeNewPiece((char)('a' + i), 2, new Pawn(board, Color.WHITE));
-//        }
+        for (int i = 0; i < board.getRows(); i++) {
+            placeNewPiece((char)('a' + i), 2, new Pawn(board, Color.WHITE));
+        }
 
         // ==== BLACK ====================================
         // KING
@@ -231,8 +232,8 @@ public class ChessMatch {
 //        placeNewPiece('d', 8, new Queen(board, Color.BLACK));
 
         // THE ROOK
-        placeNewPiece('d', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('f', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('a', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('h', 8, new Rook(board, Color.BLACK));
 
         // KNIGHT
 //        placeNewPiece('b', 8, new Knight(board, Color.BLACK));
@@ -243,9 +244,9 @@ public class ChessMatch {
 //        placeNewPiece('f', 8, new Knight(board, Color.BLACK));
 
         // PAWNS
-//        for (int i = 0; i < board.getRows(); i++) {
-//            placeNewPiece((char)('a' + i), 7, new Pawn(board, Color.BLACK));
-//        }
+        for (int i = 0; i < board.getRows(); i++) {
+            placeNewPiece((char)('a' + i), 7, new Pawn(board, Color.BLACK));
+        }
 
     }
 }
