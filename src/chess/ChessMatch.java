@@ -16,6 +16,7 @@ public class ChessMatch {
     private Board board;
     private boolean check;
     private boolean checkmate;
+    private ChessPiece enPassantVulnerable;
 
     private List<Piece> piecesOnBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
@@ -43,6 +44,9 @@ public class ChessMatch {
         return checkmate;
     }
 
+    public ChessPiece getEnPassantVulnerable() {
+        return enPassantVulnerable;
+    }
 
     public ChessPiece[][] getPieces() {
         ChessPiece[][] matrix = new ChessPiece[board.getRows()][board.getColumns()];
@@ -69,12 +73,21 @@ public class ChessMatch {
             throw new ChessException("You cant put yourself in check");
         }
 
+        ChessPiece movedPiece = (ChessPiece)board.piece(target);
+
         check = (testCheck(opponent(currentPlayer)) ? true : false);
 
         if (testCheckMate(opponent(currentPlayer))) {
             checkmate = true;
         } else {
             nextTurn();
+        }
+
+        // Google en passant
+        if (movedPiece instanceof Pawn && (target.getRow() == source.getRow() - 2 || target.getRow() == source.getRow() + 2)) {
+            enPassantVulnerable = movedPiece;
+        } else {
+            enPassantVulnerable = null;
         }
 
         return (ChessPiece)capturedPiece;
@@ -98,7 +111,7 @@ public class ChessMatch {
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(p, target);
 
-        if (p != null) {
+        if (capturedPiece != null) {
             piecesOnBoard.remove(capturedPiece);
             capturedPieces.add(capturedPiece);
         }
@@ -121,6 +134,22 @@ public class ChessMatch {
             ChessPiece rook = (ChessPiece)board.removePiece(sourceRook);
             board.placePiece(rook, targetRook);
             rook.increaseMoveCount();
+        }
+
+        // Google en passant
+        if (p instanceof Pawn) {
+            if (source.getColumn() != target.getColumn() && capturedPiece == null) {
+                Position pawnPosition;
+                if (p.getColor() == Color.WHITE) {
+                    pawnPosition = new Position(target.getRow() + 1, target.getColumn());
+                }
+                else {
+                    pawnPosition = new Position(target.getRow() - 1, target.getColumn());
+                }
+                capturedPiece = board.removePiece(pawnPosition);
+                capturedPieces.add(capturedPiece);
+                piecesOnBoard.remove(capturedPiece);
+            }
         }
 
         return capturedPiece;
@@ -156,6 +185,22 @@ public class ChessMatch {
             board.placePiece(rook, sourceRook);
             rook.decreaseMoveCount();
         }
+
+        // Google en passant
+        if (p instanceof Pawn) {
+            if (source.getColumn() != target.getColumn() && capturedPiece == enPassantVulnerable) {
+                ChessPiece enPassantedPawn = (ChessPiece)board.removePiece(target);
+                Position pawnPosition;
+                if (p.getColor() == Color.WHITE) {
+                    pawnPosition = new Position(3, target.getColumn());
+                }
+                else {
+                    pawnPosition = new Position(4, target.getColumn());
+                }
+                board.placePiece(enPassantedPawn, pawnPosition);
+            }
+        }
+
     }
 
     private void validateSourcePosition(Position position) {
@@ -240,25 +285,25 @@ public class ChessMatch {
         // ==== WHITE ====================================
         // KING
         placeNewPiece('e', 1, new King(board, Color.WHITE, this));
-//
-//        // QUEEN
-//        placeNewPiece('d', 1, new Queen(board, Color.WHITE));
+
+        // QUEEN
+        placeNewPiece('d', 1, new Queen(board, Color.WHITE));
 
         // THE ROOK
         placeNewPiece('a', 1, new Rook(board, Color.WHITE));
         placeNewPiece('h', 1, new Rook(board, Color.WHITE));
 
-//        // KNIGHT
-//        placeNewPiece('b', 1, new Knight(board, Color.WHITE));
-//        placeNewPiece('g', 1, new Knight(board, Color.WHITE));
-//
-//        // BISHOP
-//        placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
-//        placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
+        // KNIGHT
+        placeNewPiece('b', 1, new Knight(board, Color.WHITE));
+        placeNewPiece('g', 1, new Knight(board, Color.WHITE));
+
+        // BISHOP
+        placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
+        placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
 
         // PAWNS
         for (int i = 0; i < board.getRows(); i++) {
-            placeNewPiece((char)('a' + i), 2, new Pawn(board, Color.WHITE));
+            placeNewPiece((char)('a' + i), 2, new Pawn(board, Color.WHITE, this));
         }
 
         // ==== BLACK ====================================
@@ -282,7 +327,7 @@ public class ChessMatch {
 
         // PAWNS
         for (int i = 0; i < board.getRows(); i++) {
-            placeNewPiece((char)('a' + i), 7, new Pawn(board, Color.BLACK));
+            placeNewPiece((char)('a' + i), 7, new Pawn(board, Color.BLACK, this));
         }
 
     }
