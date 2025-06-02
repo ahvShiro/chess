@@ -19,9 +19,8 @@ public abstract class ChessPiece extends Piece {
     }
 
     public ChessPosition getChessPosition() {
-        return chessPosition;
+        return ChessPosition.fromPosition(position);
     }
-
 
     public abstract boolean[][] possibleMoves();
 

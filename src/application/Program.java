@@ -18,6 +18,7 @@ public class Program {
         List<ChessPiece> captured = new ArrayList<>();
 
         while (true) {
+
             try {
                 UI.clearScreen();
                 UI.printMatch(chessMatch, captured);
@@ -27,7 +28,7 @@ public class Program {
 
                 boolean[][] possibleMoves = chessMatch.possibleMoves(source);
                 UI.clearScreen();
-                UI.printMatch(chessMatch, captured);
+                UI.printBoard(chessMatch.getPieces(), possibleMoves);
 
                 System.out.println();
                 System.out.print("target: ");
@@ -46,8 +47,4 @@ public class Program {
             }
         }
     }
-
-    // Java roda em 56 bilhões de dispositivos atualmente
-    // Mercado amplo
-    // Java obriga desenvolver software bem estruturado
 }
