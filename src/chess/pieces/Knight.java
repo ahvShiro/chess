@@ -10,13 +10,13 @@ public class Knight extends ChessPiece {
         super(board, color);
     }
 
-        @Override
+    @Override
     public String toString() {
         return ("N");
     }
 
     private boolean canMove(Position pos) {
-        ChessPiece p = (ChessPiece)getBoard().piece(pos);
+        ChessPiece p = (ChessPiece) getBoard().piece(pos);
         return p == null || p.getColor() != getColor();
     }
 
@@ -24,7 +24,7 @@ public class Knight extends ChessPiece {
     public boolean[][] possibleMoves() {
         boolean[][] matrix = new boolean[getBoard().getRows()][getBoard().getColumns()];
 
-        Position p = new Position(0,0);
+        Position p = new Position(0, 0);
 
         // ACIMA
         p.setValues(position.getRow() - 1, position.getColumn() - 2);
@@ -58,19 +58,19 @@ public class Knight extends ChessPiece {
         }
 
         // NORDESTE
-        p.setValues(position.getRow() + 2, position.getColumn()+1);
+        p.setValues(position.getRow() + 2, position.getColumn() + 1);
         if (getBoard().positionExists(p) && canMove(p)) {
             matrix[p.getRow()][p.getColumn()] = true;
         }
 
         // SUDOESTE
-        p.setValues(position.getRow()+2, position.getColumn()-1);
+        p.setValues(position.getRow() + 2, position.getColumn() - 1);
         if (getBoard().positionExists(p) && canMove(p)) {
             matrix[p.getRow()][p.getColumn()] = true;
         }
 
         // SUDESTE
-        p.setValues(position.getRow()+1, position.getColumn() - 2);
+        p.setValues(position.getRow() + 1, position.getColumn() - 2);
         if (getBoard().positionExists(p) && canMove(p)) {
             matrix[p.getRow()][p.getColumn()] = true;
         }
